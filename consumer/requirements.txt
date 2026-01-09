@@ -1,0 +1,4 @@
+kafka-python
+hdfs
+prometheus_client
+requests
