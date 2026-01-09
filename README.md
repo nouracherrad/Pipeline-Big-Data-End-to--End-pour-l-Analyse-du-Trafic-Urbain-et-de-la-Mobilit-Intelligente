@@ -1,6 +1,6 @@
-# 🚦 Pipeline Big Data - Analyse du Trafic Urbain et Mobilité Intelligente
+#  Pipeline Big Data - Analyse du Trafic Urbain et Mobilité Intelligente
 
-## 📋 Table des matières
+##  Table des matières
 1. [Vue d'ensemble](#-vue-densemble)
 2. [Architecture du système](#️-architecture-du-système)
 3. [Prérequis](#-prérequis)
@@ -14,7 +14,7 @@
 
 ---
 
-## 🎯 Vue d'ensemble
+##  Vue d'ensemble
 
 Ce projet implémente un **pipeline Big Data end-to-end** pour l'analyse du trafic urbain dans le cadre d'une Smart City. Il permet de :
 
@@ -26,7 +26,7 @@ Ce projet implémente un **pipeline Big Data end-to-end** pour l'analyse du traf
 - ✅ **Orchestrer** avec Apache Airflow
 - ✅ **Monitorer** avec Prometheus
 
-### 🎓 Contexte du projet
+###  Contexte du projet
 
 Dans le cadre d'une Smart City, les villes modernes déploient des capteurs urbains (caméras, boucles magnétiques, capteurs IoT, applications mobiles) pour collecter en continu des données de trafic routier. Ce projet répond à la problématique suivante :
 
@@ -34,7 +34,7 @@ Dans le cadre d'une Smart City, les villes modernes déploient des capteurs urba
 
 ---
 
-## 🏗️ Architecture du système
+##  Architecture du système
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -89,7 +89,7 @@ Dans le cadre d'une Smart City, les villes modernes déploient des capteurs urba
 └─────────────────┘
 ```
 
-### 🔄 Flux de données
+###  Flux de données
 
 1. **Génération** : Le producer Python simule 50 capteurs générant des événements JSON
 2. **Streaming** : Les événements sont publiés dans Kafka (topic `traffic-events`)
@@ -102,7 +102,7 @@ Dans le cadre d'une Smart City, les villes modernes déploient des capteurs urba
 
 ---
 
-## 📦 Prérequis
+##  Prérequis
 
 ### Logiciels requis
 
@@ -120,24 +120,6 @@ docker --version
 
 docker-compose --version
 # Docker Compose version 2.x.x ou supérieur
-```
-
-### Configuration système recommandée
-
-- **CPU** : 4 cœurs minimum
-- **RAM** : 8 GB minimum (12 GB recommandé)
-- **Disque** : 20 GB d'espace libre
-- **OS** : Linux, macOS, ou Windows avec WSL2
-
----
-
-## 🚀 Installation et démarrage
-
-### 1. Cloner le projet
-
-```bash
-git clone <votre-repo>
-cd traffic-big-data-pipeline
 ```
 
 ### 2. Structure des dossiers
@@ -184,7 +166,7 @@ docker-compose up -d
 docker-compose ps
 ```
 
-**⏱️ Temps de démarrage estimé : 2-3 minutes**
+** Temps de démarrage estimé : 2-3 minutes**
 
 Vous devriez voir une sortie similaire à :
 
@@ -216,7 +198,7 @@ zookeeper             Up (healthy)
 
 ---
 
-## 📁 Structure du projet
+##  Structure du projet
 
 ### Producer (Générateur de données)
 
@@ -365,7 +347,7 @@ spark_processing → validate_results → generate_report
 
 ---
 
-## 🎮 Guide d'utilisation
+##  Guide d'utilisation
 
 ### Étape 1 : Démarrer le pipeline
 
@@ -379,10 +361,7 @@ docker-compose ps
 # 3. Suivre les logs généraux
 docker-compose logs -f
 ```
-
-**📸 À capturer en screenshot** :
-- Résultat de `docker-compose ps` montrant tous les services en "Up"
-- Logs du producer montrant la génération d'événements
+<img width="955" height="447" alt="image" src="https://github.com/user-attachments/assets/c24bcac0-db9e-48fe-afc2-78765454d7b7" />
 
 **Indicateurs de succès** :
 - ✅ Tous les services affichent "Up" ou "Up (healthy)"
@@ -407,15 +386,19 @@ docker exec kafka kafka-console-consumer \
   --max-messages 5
 ```
 
-**📸 À capturer en screenshot** :
-- Liste des topics montrant `traffic-events`
-- Quelques messages JSON affichés par le consumer
 
 **Exemple de sortie attendue** :
 
 ```json
 {"sensor_id":"sensor_003","road_id":"road_12","road_type":"avenue","zone":"Nord","vehicle_count":85,"average_speed":45.2,"occupancy_rate":52.1,"event_time":"2026-01-10T14:30:00"}
 ```
+#### kafka-producer
+<img width="936" height="466" alt="image" src="https://github.com/user-attachments/assets/caff4336-b6a8-467b-9211-4d37204bad77" />
+
+
+#### kafka-consumer
+<img width="960" height="746" alt="image" src="https://github.com/user-attachments/assets/096833fd-8a38-4f4d-90cd-1ddae15dbc60" />
+
 
 **Vérifier le lag du consumer** :
 
@@ -454,11 +437,10 @@ docker exec namenode hdfs dfs -cat \
 # 6. Voir la taille totale des données
 docker exec namenode hdfs dfs -du -s -h /data/raw/traffic/
 ```
-
-**📸 À capturer en screenshot** :
 - Structure hiérarchique montrant date → hour → zone
 - Contenu d'un fichier `traffic.json`
 - Taille totale des données stockées
+<img width="1592" height="653" alt="image" src="https://github.com/user-attachments/assets/894a7c43-53ef-43d8-ac2d-a546d16700c4" />
 
 #### Via interface web HDFS
 
@@ -468,10 +450,11 @@ docker exec namenode hdfs dfs -du -s -h /data/raw/traffic/
 4. Naviguer vers `/data/raw/traffic/`
 5. Explorer la structure date/hour/zone
 
-**📸 À capturer en screenshot** :
+** screenshot** :
 - Page d'accueil HDFS montrant le cluster
 - Navigation dans `/data/raw/traffic/`
 - Détails d'un fichier JSON
+<img width="1885" height="827" alt="image" src="https://github.com/user-attachments/assets/7e6a2862-6d21-49eb-bd34-cabd987c3a49" />
 
 ---
 
@@ -487,7 +470,7 @@ docker exec spark spark-submit \
   /app/spark_job.py
 ```
 
-**📸 À capturer en screenshot** :
+** À capturer en screenshot** :
 - Logs Spark montrant :
   - `📊 Nombre total d'événements: X`
   - `✅ Statistiques de trafic par zone:`
@@ -509,6 +492,8 @@ docker exec spark spark-submit \
 |Nord  |1100        |95.3              |45.7     |52.1          |
 ...
 ```
+<img width="1641" height="742" alt="image" src="https://github.com/user-attachments/assets/a6b5b4d0-c638-4b9a-9d13-c07e1e56af37" />
+
 
 #### Méthode 2 : Via Airflow (recommandé)
 
@@ -535,11 +520,11 @@ df.show()
 EOF
 ```
 
-**📸 À capturer en screenshot** :
-- Liste des dossiers analytics
+**📸Liste des dossiers analytics** :
 - Contenu d'une table (by_zone, by_road_type, ou congested_zones)
-
 ---
+<img width="1197" height="167" alt="image" src="https://github.com/user-attachments/assets/ec62cb40-f9c2-41c1-b685-a0d65799b59c" />
+
 
 ### Étape 5 : Utiliser Airflow
 
@@ -550,9 +535,6 @@ EOF
    - **Username** : `admin`
    - **Password** : `admin`
 
-**📸 À capturer en screenshot** :
-- Page de connexion Airflow
-- Page d'accueil avec la liste des DAGs
 
 #### Activer le DAG
 
@@ -560,9 +542,9 @@ EOF
 2. Cliquer sur le bouton **Toggle** (interrupteur) à gauche pour l'activer
 3. Le DAG devient actif et s'exécutera automatiquement toutes les heures
 
-**📸 À capturer en screenshot** :
-- DAG activé (interrupteur en bleu/vert)
-- Description du DAG : "Pipeline Big Data pour analyse du trafic urbain"
+**📸 screenshot** :
+<img width="1902" height="635" alt="image" src="https://github.com/user-attachments/assets/484f9de4-12f7-4767-b982-695b77d63e03" />
+
 
 #### Lancer manuellement le DAG
 
@@ -571,9 +553,11 @@ EOF
 3. Sélectionner **Trigger DAG**
 4. Confirmer le lancement
 
-**📸 À capturer en screenshot** :
-- Bouton "Trigger DAG"
-- Fenêtre de confirmation
+**📸  screenshot** :
+- Vue Graph montrant toutes les tâches
+- Tâches en cours d'exécution (jaune)
+- Toutes les tâches réussies (vert)
+<img width="1891" height="966" alt="image" src="https://github.com/user-attachments/assets/68da0ff1-990f-4661-aa36-44ab152dc017" />
 
 #### Observer l'exécution
 
@@ -584,10 +568,6 @@ EOF
    - 🟢 Vert : Réussi
    - 🔴 Rouge : Échoué
 
-**📸 À capturer en screenshot** :
-- Vue Graph montrant toutes les tâches
-- Tâches en cours d'exécution (jaune)
-- Toutes les tâches réussies (vert)
 
 #### Vue détaillée des logs
 
@@ -599,28 +579,8 @@ EOF
 - Logs de la tâche `check_hdfs_data` montrant les fichiers trouvés
 - Logs de la tâche `spark_processing` montrant le succès du job
 - Logs de la tâche `generate_report` montrant le rapport final
+<img width="1887" height="955" alt="image" src="https://github.com/user-attachments/assets/e000137d-e717-4141-add8-5fb4fe4996aa" />
 
-**Exemple de log attendu pour `spark_processing`** :
-
-```
-[2026-01-10, 14:35:00] {bash.py:123} INFO - 🔥 Lancement du job Spark...
-[2026-01-10, 14:35:05] {bash.py:123} INFO - 📊 Nombre total d'événements: 5432
-[2026-01-10, 14:35:10] {bash.py:123} INFO - ✅ Job Spark terminé avec succès
-```
-
-#### Vue du calendrier
-
-1. Cliquer sur l'onglet **Calendar**
-2. Observer l'historique des exécutions
-3. Chaque case colorée représente une exécution :
-   - Vert : Succès
-   - Rouge : Échec
-   - Blanc : Pas d'exécution
-
-**📸 À capturer en screenshot** :
-- Vue calendrier montrant plusieurs exécutions réussies
-
----
 
 ### Étape 6 : Visualiser avec Grafana
 
@@ -632,9 +592,9 @@ EOF
    - **Password** : `admin`
 3. (Optionnel) Changer le mot de passe ou cliquer sur "Skip"
 
-**📸 À capturer en screenshot** :
-- Page de connexion Grafana
-- Page d'accueil de Grafana
+** Page d'accueil de Grafana** :
+<img width="1918" height="965" alt="image" src="https://github.com/user-attachments/assets/cbb52b11-28c3-4d4f-948f-44479497aa52" />
+
 
 #### Accéder au dashboard
 
@@ -642,9 +602,9 @@ EOF
 2. Sélectionner **Dashboards**
 3. Cliquer sur **Traffic Analytics - Smart City**
 
-**📸 À capturer en screenshot** :
-- Liste des dashboards
+** Liste des dashboards** :
 - Dashboard complet "Traffic Analytics - Smart City"
+<img width="967" height="447" alt="image" src="https://github.com/user-attachments/assets/8d813daf-044a-4a8a-9103-581eecaeed63" />
 
 #### Panels du dashboard
 
@@ -662,7 +622,8 @@ Le dashboard contient 5 panels principaux :
   - 🔴 Rouge : > 5000 événements
 
 **📸 À capturer en screenshot** :
-- Panel montrant le compteur total (ex: 8532 événements)
+- Panel montrant le compteur total
+  <img width="1423" height="381" alt="image" src="https://github.com/user-attachments/assets/4728ee9d-8f8b-45e8-bc7e-cb481f058bb4" />
 
 ---
 
@@ -679,12 +640,9 @@ Le dashboard contient 5 panels principaux :
 - Tendances différentes selon les zones
 - Identification rapide des zones les plus fréquentées
 
-**📸 À capturer en screenshot** :
-- Graphique avec les 5 courbes de zones
-- Légende montrant les couleurs de chaque zone
-- Pic visible pendant les heures de pointe
+**screenshot** :
+<img width="640" height="352" alt="image" src="https://github.com/user-attachments/assets/dc6a1e9b-409b-4f5a-b4b2-8da6b00ee70e" />
 
----
 
 ##### 3. Vitesse Moyenne (Gauge)
 
@@ -700,10 +658,11 @@ Le dashboard contient 5 panels principaux :
 - 🟡 Jaune : 30-50 km/h (ralentissement)
 - 🟢 Vert : > 50 km/h (fluide)
 
-**📸 À capturer en screenshot** :
+**screenshot** :
 - Ensemble des jauges pour toutes les zones
 - Au moins une zone en rouge (congestion)
 - Au moins une zone en vert (fluide)
+<img width="630" height="377" alt="image" src="https://github.com/user-attachments/assets/40af6d4a-8c48-4d48-a0d5-9778c7165b0d" />
 
 ---
 
@@ -720,10 +679,11 @@ Le dashboard contient 5 panels principaux :
 - Occupation élevée (>70%) = risque de congestion
 - Occupation faible (<30%) = trafic fluide
 
-**📸 À capturer en screenshot** :
+**screenshot** :
 - Graphique montrant l'évolution temporelle
 - Courbes de différentes couleurs pour chaque zone
 - Variation visible selon les heures
+<img width="618" height="388" alt="image" src="https://github.com/user-attachments/assets/b639427d-38b1-4895-90a1-827c6bb1afd6" />
 
 ---
 
@@ -747,9 +707,10 @@ Congestion = 0.4 × (vehicle_count/200×100)
 - 🟡 Jaune : 40-70 (modéré)
 - 🔴 Rouge : 70-100 (congestionné)
 
-**📸 À capturer en screenshot** :
+**screenshot** :
 - Jauges de congestion pour toutes les zones
 - Au moins une zone en état critique (rouge)
+<img width="1913" height="592" alt="image" src="https://github.com/user-attachments/assets/eab5462a-3de9-4a39-b7cb-b994f154a935" />
 
 ---
 
@@ -766,18 +727,12 @@ En haut à droite du dashboard :
    - Last 3 hours
    - Custom range
 
-**📸 À capturer en screenshot** :
-- Menu de sélection temporelle
-- Dashboard mis à jour avec une période différente
-
 ##### Rafraîchissement automatique
 
 1. En haut à droite, cliquer sur l'icône de rafraîchissement
 2. Sélectionner "5s" pour un rafraîchissement toutes les 5 secondes
 3. Observer les graphiques se mettre à jour en temps réel
 
-**📸 À capturer en screenshot** (optionnel) :
-- Indicateur de rafraîchissement automatique actif
 
 ##### Zoom sur un graphique
 
@@ -800,8 +755,6 @@ En haut à droite du dashboard :
 1. Ouvrir dans un navigateur : http://localhost:9090
 2. Aucune authentification requise
 
-**📸 À capturer en screenshot** :
-- Page d'accueil de Prometheus
 
 #### Vérifier les targets
 
@@ -809,9 +762,11 @@ En haut à droite du dashboard :
 2. Sélectionner **Targets**
 3. Vérifier que `kafka_consumer_metrics` est en **UP**
 
-**📸 À capturer en screenshot** :
-- Liste des targets
+**Liste des targets** :
+
 - Target `kafka_consumer_metrics` avec état "UP" et endpoint `kafka-consumer:8000`
+ ![Uploading image.png…]()
+
 
 #### Exécuter des requêtes PromQL
 
@@ -824,9 +779,6 @@ rate(traffic_events_total[1m])
 1. Copier la requête dans la barre de recherche
 2. Cliquer sur **Execute**
 3. Sélectionner l'onglet **Graph** pour voir l'évolution
-
-**📸 À capturer en screenshot** :
-- Graphique montrant le taux d'événements/seconde
 
 ---
 
@@ -844,6 +796,139 @@ avg(traffic_vehicle_count) by (zone)
 {zone="Est"}       102.1
 {zone="Ouest"}     78.9
 ```
+## Conclusion
 
-**📸 À capturer en screenshot** :
-- Table montrant les valeurs par
+Ce projet démontre la mise en place complète d'un **pipeline Big Data end-to-end** pour l'analyse du trafic urbain dans le contexte d'une Smart City. L'architecture implémentée couvre l'ensemble des étapes essentielles d'un système de traitement de données massives en temps réel.
+
+### Objectifs atteints
+
+#### 1. Collecte de données en temps réel
+- Simulation de 50 capteurs IoT urbains
+- Génération continue d'événements de trafic
+- Adaptation du trafic selon les heures (pointe, creuse, normale)
+- Format JSON standardisé et structuré
+
+#### 2. Ingestion streaming
+- Apache Kafka pour la gestion des flux temps réel
+- Producer capable de générer des milliers d'événements
+- Consumer avec gestion des erreurs et reconnexion automatique
+- Exposition de métriques pour le monitoring
+
+#### 3. Stockage distribué (Data Lake)
+- HDFS comme système de stockage distribué
+- Organisation hiérarchique par date/heure/zone
+- Zone Raw pour les données brutes
+- Zone Analytics pour les résultats traités
+
+#### 4. Traitement Big Data
+- Apache Spark pour le traitement distribué
+- Calculs d'agrégations et statistiques complexes
+- Détection des zones congestionnées
+- Format Parquet optimisé pour l'analyse
+
+#### 5. Visualisation et dashboards
+- Grafana avec dashboards interactifs
+- 5 panels couvrant tous les KPIs métier
+- Rafraîchissement temps réel (5 secondes)
+- Alertes visuelles par seuils de couleur
+
+#### 6. Orchestration et automatisation
+- Apache Airflow pour l'automatisation du pipeline
+- DAG avec 6 tâches interdépendantes
+- Exécution automatique toutes les heures
+- Gestion des erreurs et retry automatique
+
+#### 7. Monitoring et observabilité
+- Prometheus pour la collecte de métriques
+- 7 métriques exposées par le consumer
+- Supervision de la santé des services
+- Requêtes PromQL pour l'analyse avancée
+
+### Compétences démontrées
+
+Ce projet illustre la maîtrise des technologies et concepts suivants :
+
+| Domaine | Technologies | Compétences |
+|---------|-------------|-------------|
+| **Streaming** | Kafka, Producer/Consumer | Traitement temps réel, gestion des flux IoT |
+| **Stockage** | HDFS, Parquet | Data Lake, partitionnement, formats optimisés |
+| **Traitement** | Apache Spark, PySpark | Calculs distribués, agrégations, transformations |
+| **Orchestration** | Apache Airflow | Workflows, DAGs, automatisation, scheduling |
+| **Visualisation** | Grafana, Prometheus | Dashboards, métriques, KPIs, monitoring |
+| **Infrastructure** | Docker, Docker Compose | Conteneurisation, orchestration, microservices |
+| **DevOps** | CI/CD concepts | Automatisation, logging, healthchecks |
+
+### Résultats métier
+
+Le pipeline produit des insights exploitables pour la gestion urbaine :
+
+1. **Identification des zones critiques** en temps réel
+2. **Prédiction des congestions** basée sur des patterns historiques
+3. **Optimisation du trafic** grâce aux statistiques par type de route
+4. **Aide à la décision** pour la planification urbaine
+5. **Alertes automatiques** pour les interventions urgentes
+
+### Scalabilité et évolutions possibles
+
+Le système est conçu pour évoluer :
+
+**Court terme** :
+- Augmentation du nombre de capteurs (scalabilité horizontale)
+- Ajout de nouvelles zones géographiques
+- Intégration de données météo pour corrélation
+
+**Moyen terme** :
+- Machine Learning pour la prédiction de congestion
+- API REST pour exposer les analytics
+- Système de recommandation d'itinéraires
+
+**Long terme** :
+- Déploiement sur Kubernetes pour haute disponibilité
+- Intégration avec systèmes de feux intelligents
+- Extension à d'autres villes (multi-tenant)
+
+### Valeur ajoutée pour une Smart City
+
+Ce pipeline répond aux enjeux majeurs de la mobilité urbaine :
+
+- **Réactivité** : Détection des problèmes en quelques secondes
+- **Prévention** : Anticipation des congestions avant qu'elles ne surviennent
+- **Optimisation** : Meilleure allocation des ressources municipales
+- **Durabilité** : Réduction des émissions par fluidification du trafic
+- **Transparence** : Données accessibles via dashboards publics
+
+### Apprentissages clés
+
+1. **Architecture Lambda** : Combinaison de traitement batch (Spark) et streaming (Kafka)
+2. **Data Lake moderne** : Organisation en zones (Raw, Processed, Analytics)
+3. **Observabilité** : L'importance du monitoring dès la conception
+4. **Résilience** : Gestion des pannes et reprise automatique
+5. **Performance** : Optimisations (partitionnement, formats, buffering)
+
+### Conclusion finale
+
+Ce projet démontre qu'un **pipeline Big Data robuste et scalable** peut être mis en place avec des technologies open-source modernes. L'approche end-to-end, de la collecte à la visualisation en passant par le traitement distribué, illustre parfaitement les défis et solutions d'un système Big Data en production.
+
+La combinaison de **Kafka, HDFS, Spark, Airflow, et Grafana** forme une stack technologique éprouvée, capable de gérer des volumes massifs de données tout en fournissant des insights exploitables en temps réel.
+
+Ce système est **prêt pour la production** et pourrait être déployé dans une véritable Smart City avec des ajustements mineurs pour s'adapter aux spécificités locales.
+
+
+
+## Références
+
+- [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
+- [Apache Spark Documentation](https://spark.apache.org/docs/latest/)
+- [Apache Airflow Documentation](https://airflow.apache.org/docs/)
+- [Hadoop HDFS Guide](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html)
+- [Grafana Documentation](https://grafana.com/docs/)
+- [Prometheus Documentation](https://prometheus.io/docs/)
+
+---
+
+## Auteur
+
+**Noura cherrad** - Projet Big Data : Analyse du Trafic Urbain et Mobilité Intelligente
+**nissrine el fijaoui** - Projet Big Data : Analyse du Trafic Urbain et Mobilité Intelligente
+
+---
