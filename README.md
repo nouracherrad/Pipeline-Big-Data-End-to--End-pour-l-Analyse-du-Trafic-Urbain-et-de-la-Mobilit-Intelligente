@@ -929,6 +929,9 @@ Ce système est **prêt pour la production** et pourrait être déployé dans un
 ## Auteur
 
 **Noura cherrad** - Projet Big Data : Analyse du Trafic Urbain et Mobilité Intelligente
+
+
+
 **nissrine el fijaoui** - Projet Big Data : Analyse du Trafic Urbain et Mobilité Intelligente
 
 ---
